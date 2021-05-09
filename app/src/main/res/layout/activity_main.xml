@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <Button
+            android:id="@+id/button_my_helmet"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textSize="30dp"
+            android:background="@drawable/main_screen_buttons"
+            android:layout_marginTop="200dp"
+            android:text="My Helmet" />
+
+        <Button
+            android:id="@+id/button_history"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textSize="30dp"
+            android:background="@drawable/main_screen_buttons"
+            android:layout_marginTop="20dp"
+            android:text="History" />
+
+        <Button
+            android:id="@+id/store_scan_barcode"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/main_screen_buttons"
+            android:text="SCAN THE BAR CODE"
+            android:textSize="30dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_profile"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textSize="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/main_screen_buttons"
+            android:text="Profile" />
+
+    </LinearLayout>
+</LinearLayout>

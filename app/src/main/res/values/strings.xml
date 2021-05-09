@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Happy Helmet</string>
+    <string name="title_activity_my_helmet">MyHelmetActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="register">REGISTER</string>
+    <string name="login_usr_id_hint">User ID</string>
+    <string name="login_usr_email_hint">Email</string>
+    <string name="login_usr_mobile_number_hint">Mobile Number</string>
+    <string name="login_usr_Name_hint">Name</string>
+    <string name="login_usr_Register_button_hint">Register</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account? Sign In NOW!</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="login_forgetPassword_hint">Forget password?</string>
+    <string name="Check_box_text"><b>Show</b></string>
+
+    <!--    profile-->
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_share_barcode">ShareBarcode</string>
+
+
+</resources>

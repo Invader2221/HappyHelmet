@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "207062691701",
+    "firebase_url": "https://happy-helmet-default-rtdb.firebaseio.com",
+    "project_id": "happy-helmet",
+    "storage_bucket": "happy-helmet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207062691701:android:48da42cb4e7f8f26a4ed3c",
+        "android_client_info": {
+          "package_name": "com.example.happy_helmet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207062691701-ke3akj1t51g0osv3tr6mrvtab6714l9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWCKaWD-gJrufho49GLaRwh7EKkI3Z6a4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207062691701-ke3akj1t51g0osv3tr6mrvtab6714l9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
