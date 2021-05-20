@@ -78,13 +78,13 @@ public class SendMessageActivity extends AppCompatActivity {
             }
 
         }
-        receiverIDText.setText("Receiver Id : " + userEmail);
+        receiverIDText.setText("Receiver email : " + userEmail);
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss a");
         final String formattedDate = df.format(c.getTime());
 
-        checkInText.setText("Current Time : " + formattedDate);
+        checkInText.setText("Current time : " + formattedDate);
 
         final String finalUserID = userID;
         //final String finalUserEmail = userEmail;

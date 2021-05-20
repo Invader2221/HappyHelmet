@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity">
 
-<ImageView
-    android:id="@+id/app_logo"
-    android:layout_width="300dp"
-    android:layout_height="100dp"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="45dp"
-    android:src="@drawable/applogo"
-    />
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="98dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="55dp"
+        android:src="@drawable/applogo" />
 
     <TextView
         android:id="@+id/app_slogan"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="174dp"
+        android:layout_above="@+id/main_login_btn"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="88dp"
-        android:layout_marginTop="140dp"
-        android:text="Keep your helmets safe while you study and doing need to carry every where anymore!"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="95dp"
+        android:layout_marginBottom="191dp"
+        android:text="Keep your helmets safe while you study\nand don't\nneed to carry every where\nANYMORE!"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="22sp"
-        android:textStyle="bold|italic"
-        />
-
+        android:textStyle="bold|italic" />
 
     <Button
         android:id="@+id/main_login_btn"
@@ -45,7 +49,7 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:layout_above="@+id/main_join_now_btn"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="italic" />
 
     <Button
@@ -59,7 +63,7 @@
         android:background="@drawable/input_design"
         android:padding="20dp"
         android:textAllCaps="false"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="Join Now"
         android:textColor="@android:color/black"

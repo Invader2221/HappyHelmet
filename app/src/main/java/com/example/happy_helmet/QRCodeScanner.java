@@ -1,15 +1,12 @@
 package com.example.happy_helmet;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.happy_helmet.Firebase.SendMessageActivity;
@@ -24,14 +21,13 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QRCodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-
     private ZXingScannerView scannerView;
 //    private TextView txtResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_code_scanner);
+        setContentView(R.layout.activity_qr_scanner);
         getSupportActionBar().setTitle("Scan QR Code");
 
 //        ActionBar actionBar = getSupportActionBar();

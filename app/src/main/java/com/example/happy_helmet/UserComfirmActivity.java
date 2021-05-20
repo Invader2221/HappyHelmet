@@ -88,7 +88,8 @@ public class UserComfirmActivity extends AppCompatActivity {
                                 approval.setText("Check In");
                                 confirmId.setText("Helmet Id : " + helmetId);
                                 CheckIn.setText("Check in time : " + pushTime);
-                                CheckOutText.setText("Check Out time : -");
+                                CheckOutText.setVisibility(View.GONE);
+
                             } else {
                                 approval.setText("Check Out");
                                 confirmId.setText("Helmet Id : " + helmetId);

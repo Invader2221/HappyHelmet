@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
                             final Users userNew = datas.getValue(Users.class);
                             String emailText = userNew.getEmail();
 
-
                             if (emailText.equals(email.getText().toString().trim())) {
 
                                 userFound = true;
@@ -72,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String isStoreKeeper = userNew.getAdmin();
 
                                 if (password.equals(pass.getText().toString().trim())) {
+
                                     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                     editor.putString("userPhoneNumber", dataSnapshot.getKey());
                                     editor.putString("loggedUserName", userNew.getName());
@@ -84,12 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                     Log.e("TAG", dataSnapshot.getKey());
 
-
                                     FirebaseMessaging.getInstance().subscribeToTopic(userNew.getStuid())
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    String msg = "Welcome to" + userNew.getEmail();
+                                                    String msg = "Welcome " + userNew.getEmail();
 
                                                     Log.e("TAG", msg);
                                                     Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -111,64 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_LONG).show();
                         }
                     }
-
-
-
-               /* DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
-                mDatabase.child(email.getText().toString().trim()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-
-                            final Users userNew = dataSnapshot.getValue(Users.class);
-                            String password = userNew.getPassword();
-                            String isStoreKeeper = userNew.getAdmin();
-
-                            if (password.equals(pass.getText().toString().trim())) {
-                                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                editor.putString("userPhoneNumber", dataSnapshot.getKey());
-                                editor.putString("loggedUserName", userNew.getName());
-                                editor.putString("loggedUserId", userNew.getStuid());
-                                editor.putString("loggedUserPhone", userNew.getPhone());
-                                editor.putString("loggedUserEmail", userNew.getEmail());
-
-//                                SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-//                                String welcomeUser = prefs.getString("loggedUserName","");
-
-                                if (isStoreKeeper != null) {
-                                    editor.putString("userIsStoreKeeper", "YES");
-                                }
-                                Log.e("TAG", dataSnapshot.getKey());
-
-                                FirebaseMessaging.getInstance().subscribeToTopic("qwqwqwqwqwfghgf")
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                String msg = "Welcome to" + userNew.getEmail();
-
-                                                Log.e("TAG", msg);
-                                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-//                                FirebaseMessaging.getInstance().subscribeToTopic(dataSnapshot.getKey());
-
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                                editor.apply();
-
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Password is wrong", Toast.LENGTH_LONG).show();
-                            }
-                            for (DataSnapshot user : dataSnapshot.getChildren()) {
-                                Log.e("zxzc", "" + userNew);
-
-                            }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_LONG).show();
-                        }
-                    }*/
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Toast.makeText(LoginActivity.this, "No internet found", Toast.LENGTH_LONG).show();
