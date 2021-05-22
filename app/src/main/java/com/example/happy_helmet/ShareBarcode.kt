@@ -30,6 +30,7 @@ class ShareBarcode : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_barcode)
+        supportActionBar!!.title = "Helmet QR code"
 
         val writer = QRCodeWriter()
         imageQR = findViewById(R.id.weww)
