@@ -50,7 +50,7 @@
             <EditText
                 android:id="@+id/register_phone_number_input"
                 style="@style/modifiedEditText"
-                android:inputType="text"
+                android:inputType="number"
                 android:maxLines="1"
                 android:hint="@string/login_usr_mobile_number_hint"
                 tools:ignore="TextFields" />

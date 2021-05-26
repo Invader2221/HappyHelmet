@@ -2,22 +2,20 @@ package com.example.happy_helmet.GetterSetters;
 
 public class Users{
 
-    private String Name, password, admin, stuId, phone, email;
+    private String Name, password, admin, stuid, phone, email;
 
     public Users() {
     }
 
-    public Users(String name, String password, String admin, String stuId, String phone, String email) {
+    public Users(String name, String stuid, String phone, String email) {
         this.Name = name;
-        this.password = password;
-        this.admin = admin;
-        this.stuId = stuId;
+        this.stuid = stuid;
         this.phone = phone;
         this.email = email;
     }
 
     public String getStuid() {
-        return stuId;
+        return stuid;
     }
 
     public String getEmail() {

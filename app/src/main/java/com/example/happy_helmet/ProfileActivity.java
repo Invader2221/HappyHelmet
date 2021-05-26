@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.happy_helmet.Recycler.MyHelmetActivity;
 import com.example.happy_helmet.Recycler.UserHistory;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -76,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
+                                FirebaseAuth.getInstance().signOut();
                                 FirebaseMessaging.getInstance().unsubscribeFromTopic(prefs.getString("loggedUserId", ""));
 
                                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();

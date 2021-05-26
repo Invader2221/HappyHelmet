@@ -8,19 +8,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.happy_helmet.GetterSetters.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -31,11 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText InputName, InputEmail, InputPhoneNumber, InputPassword;
     private ProgressDialog loadingBar;
     ImageView closeIcon;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mAuth = FirebaseAuth.getInstance();
 
 
         CreateAccountButton = (Button) findViewById(R.id.register_btn);
@@ -72,86 +82,86 @@ public class RegisterActivity extends AppCompatActivity {
     private void CreateAccount() {
 
         String name = InputName.getText().toString();
-        String usrEmail = InputEmail.getText().toString();
+        String email = InputEmail.getText().toString();
         String phone = InputPhoneNumber.getText().toString();
         String password = InputPassword.getText().toString();
 
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(usrEmail)) {
-            Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT).show();
+            InputName.setError("Please enter your name");
+//            Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
+
+        } else if (TextUtils.isEmpty(email)) {
+            InputEmail.setError("Please enter your email");
+
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            InputEmail.setError("Please provide a valid email");
+            InputEmail.requestFocus();
+
         } else if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "Please enter your phone number.", Toast.LENGTH_SHORT).show();
+            InputPhoneNumber.setError("Please provide your phone number");
+
         } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter your password.", Toast.LENGTH_SHORT).show();
+            InputPassword.setError("Please provide a password");
+
+        } else if (password.length() < 6) {
+            InputPassword.setError("Minimum length of password is 6 characters!");
+            InputPassword.requestFocus();
+
         } else {
             loadingBar.setTitle("Creating Account");
             loadingBar.setMessage("Please wait, while you are checking the credentials");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            saveToRealTimeDB(name, usrEmail, phone, password);
+//            saveToRealTimeDB(name, usrEmail, phone, password);
+
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+
+                                final String stuID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                Users user = new Users(name, stuID, phone, email);
+
+                                FirebaseDatabase.getInstance().getReference("Users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(RegisterActivity.this, "Congratulations, Check your mails to active your account", Toast.LENGTH_LONG).show();
+                                            loadingBar.dismiss();
+
+                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                            user.sendEmailVerification();
+
+                                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+
+
+                                        } else {
+                                            loadingBar.dismiss();
+                                            Toast.makeText(RegisterActivity.this, "Network Error, please try again", Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+                                });
+
+                            } else {
+                                loadingBar.dismiss();
+                                Toast.makeText(RegisterActivity.this, "Email is already registered", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
         }
 
     }
 
-
-    private void saveToRealTimeDB(final String name, final String usrEmail, final String phone, final String password) {
-
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
-        final String stuID = UUID.randomUUID().toString().replace("-","");
-
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!(dataSnapshot.child("Users").child(stuID).exists())) {
-
-                    HashMap<String, Object> userdataMap = new HashMap<>();
-                    userdataMap.put("phone", phone);
-                    userdataMap.put("email", usrEmail);
-                    userdataMap.put("password", password);
-                    userdataMap.put("stuId", stuID);
-                    userdataMap.put("name", name);
-
-                    RootRef.child("Users").child(stuID).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "Congratulations, your account has been created", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
-
-                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-
-
-                                    } else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this, "Network Error, please try again", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            });
-
-                } else {
-                    Toast.makeText(RegisterActivity.this, "Student email:" + usrEmail + " is already registered", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-
-                    Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
-                    startActivity(intent);
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onBackPressed() {
