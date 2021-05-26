@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     editor.apply();
 
+
                                 } else{
                                     progressBar.setVisibility(View.GONE);
                                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
