@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -53,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailEditText = (EditText) findViewById(R.id.login_student_id);
+        emailEditText = (EditText) findViewById(R.id.login_user_email);
         passEditText = (EditText) findViewById(R.id.login_password_input);
         loginSignUPNow = (TextView) findViewById(R.id.Login_signUp_text);
         loginForgetPassword = (TextView) findViewById(R.id.Login_forgetPassword_text);
@@ -97,29 +96,35 @@ public class LoginActivity extends AppCompatActivity {
             emailEditText.requestFocus();
 
         } else if (password.isEmpty()) {
-            passEditText.setError("Please provide a valid email");
+            passEditText.setError("Please enter your password");
             passEditText.requestFocus();
-        }
 
-        progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+        } else if (password.length() < 6) {
+            passEditText.setError("Minimum length of password is 6 characters!");
+            passEditText.requestFocus();
 
-                if (task.isSuccessful()) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    ref = FirebaseDatabase.getInstance().getReference("Users");
-                    userId = user.getUid();
+        } else {
 
-                    ref.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            progressBar.setVisibility(View.VISIBLE);
+
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        ref = FirebaseDatabase.getInstance().getReference("Users");
+                        userId = user.getUid();
+
+                        ref.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 Users userNew = snapshot.getValue(Users.class);
                                 String isStoreKeeper = userNew.getAdmin();
 
-                                if (user.isEmailVerified()){
+                                if (user.isEmailVerified()) {
 
                                     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                     editor.putString("userPhoneNumber", snapshot.getKey());
@@ -149,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     editor.apply();
 
-                                } else{
+                                } else {
                                     progressBar.setVisibility(View.GONE);
                                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 
@@ -160,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                                             .setPositiveButton("Send", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     user.sendEmailVerification();
-                                                    Toast.makeText(LoginActivity.this,"Please check your email to verify your account",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(LoginActivity.this, "Please check your email to verify your account", Toast.LENGTH_LONG).show();
                                                 }
                                             })
                                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -174,22 +179,24 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(LoginActivity.this, "No internet found", Toast.LENGTH_LONG).show();
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(LoginActivity.this, "No internet found", Toast.LENGTH_LONG).show();
 
-                        }
-                    });
+                            }
+                        });
 
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_LONG).show();
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
+            });
 
-            }
-        });
+        }
 
 
     }

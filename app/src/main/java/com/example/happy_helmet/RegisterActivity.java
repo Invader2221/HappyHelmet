@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             } else {
                                 loadingBar.dismiss();
-                                Toast.makeText(RegisterActivity.this, "Email is already registered", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
                             }
                         }

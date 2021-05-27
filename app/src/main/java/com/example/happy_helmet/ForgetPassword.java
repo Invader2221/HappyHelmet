@@ -51,31 +51,31 @@ public class ForgetPassword extends AppCompatActivity {
     private void resetPassword() {
         String email = editForgetEmail.getText().toString().trim();
 
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             editForgetEmail.setError("Please enter your email");
-        }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editForgetEmail.setError("Please enter your email");
             editForgetEmail.requestFocus();
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Void> task) {
+        auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
 
-                if (task.isSuccessful()){
-                    Toast.makeText(ForgetPassword.this,"Check your email to rest the password",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ForgetPassword.this, LoginActivity.class);
-                    finish();
-                    startActivity(intent);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ForgetPassword.this, "Reset password link has been sent your email", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
+                            Intent intent = new Intent(ForgetPassword.this, LoginActivity.class);
+                            startActivity(intent);
 
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(ForgetPassword.this,"Check your email and try again!",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(ForgetPassword.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
     }
 }
