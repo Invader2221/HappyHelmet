@@ -48,9 +48,9 @@
                 <TextView
                     style="@style/headerText"
                     android:layout_gravity="center"
-                    android:text="Happy Helmet"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="25dp"/>
+                    android:layout_marginBottom="25dp"
+                    android:text="Safety Test" />
                 <include
                     layout="@layout/layout_register"/>
 

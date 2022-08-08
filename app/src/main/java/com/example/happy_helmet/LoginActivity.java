@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("loggedUserEmail", userNew.getEmail());
 
                                     if (isStoreKeeper != null) {
-                                        editor.putString("userIsStoreKeeper", "YES");
+                                        editor.putString("userIsStoreKeeper", "yes");
                                     }
                                     Log.e("TAG", snapshot.getKey());
 

@@ -17,10 +17,10 @@
             android:id="@+id/button_my_helmet"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:textSize="30dp"
-            android:background="@drawable/main_screen_buttons"
             android:layout_marginTop="200dp"
-            android:text="My Helmet" />
+            android:background="@drawable/main_screen_buttons"
+            android:text="My Instruments"
+            android:textSize="30dp" />
 
         <Button
             android:id="@+id/button_history"

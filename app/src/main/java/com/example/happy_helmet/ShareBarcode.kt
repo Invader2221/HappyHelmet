@@ -48,7 +48,7 @@ class ShareBarcode : AppCompatActivity() {
         val bitMatrix = writer.encode(qrText, BarcodeFormat.QR_CODE, 300, 300, hints)
         val width = bitMatrix.width
         val height = bitMatrix.height
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         for (x in 0 until width) {
             for (y in 0 until height) {
                 bitmap.setPixel(

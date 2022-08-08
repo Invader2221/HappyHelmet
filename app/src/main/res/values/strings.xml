@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Happy Helmet</string>
+    <string name="app_name">Safety Test</string>
     <string name="title_activity_my_helmet">MyHelmetActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
